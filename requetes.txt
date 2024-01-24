@@ -1,0 +1,41 @@
+Horaires de séances
+SELECT * FROM seances WHERE date_debut BETWEEN '2024-01-24 14:00:00' AND '2024-01-24 20:00:00';
+
+Analyse age 
+SELECT age, CASE WHEN age < 18 THEN 'Mineur' ELSE 'Majeur' END as categorie_age FROM clients;
+
+Ajouter age utilisateur
+ALTER TABLE clients ADD age INT
+
+Supprimer table 
+DROP TABLE nom table
+
+Recherche un film qui a le mot accident de voiture dans la description
+SELECT * FROM films WHERE description LIKE '%accident de voiture%';
+
+Trouver les clients qui s'appelent Sophie John Pierre
+SELECT * FROM clients WHERE prenom IN('Sophie','John','Pierre');
+
+Effacer et reintialiser la table des client 
+TRUNCATE TABLE client
+
+Selectionner les films à plus de 2 séances limité 2 resultats
+SELECT nom FROM films INNER JOIN seances ON films.id_film=seances.id_film GROUP BY films.nom HAVING COUNT(seances.id_seance)>2 LIMIT 2;
+
+Spprimer client qui a quitté 
+DELETE FROM clients WHERE id_client=1
+
+Modifier le nom d'un d'un client 
+UPDATE clients SET nom'Sapa' WHERE id_client=1
+
+Récuperer les séances par ordre de passage
+SELECT * FROM seances ORDER BY date_debut
+
+Nombre de films regardé par les clients qui ont regardé au moins un film 
+SELECT DISTINCT prenom,nom,COUNT(films_seances.id_seance) FROM clients INNER JOIN films_seances WHERE clients.id_client = films_seances.id_client GROUP BY clients.nom;
+
+Afficher les film que les films que les clients ont regardé
+SELECT clients.nom, films.nom FROM clients JOIN films_seances ON clients.id_client = films_seances.id_client JOIN seances ON films_seances.id_seance = seances.id_seance JOIN films ON seances.id_film = films.id_film;
+
+Une union sans aucun but mais une union qui fonctionne
+SELECT id_client, nom, prenom FROM clients UNION SELECT id_film, nom, description FROM films;
