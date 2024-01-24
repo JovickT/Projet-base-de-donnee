@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mer. 24 jan. 2024 à 12:34
+-- Généré le : mer. 24 jan. 2024 à 15:25
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.0.26
 
@@ -20,6 +20,17 @@ SET time_zone = "+00:00";
 --
 -- Base de données : `cimena`
 --
+
+DELIMITER $$
+--
+-- Procédures
+--
+DROP PROCEDURE IF EXISTS `changeValuePlace`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `changeValuePlace` (IN `reference_of_id_place` INT(2))   BEGIN
+SELECT places.id_place, places.reference, places.etat FROM places INNER JOIN reservations ON places.id_place = reference_of_id_place AND places.etat = 1 GROUP BY places.reference;
+END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -111,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `places` (
   `etat` tinyint(1) NOT NULL,
   PRIMARY KEY (`id_place`),
   KEY `id_salle` (`id_salle`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `places`
@@ -120,9 +131,30 @@ CREATE TABLE IF NOT EXISTS `places` (
 INSERT INTO `places` (`id_place`, `reference`, `id_salle`, `etat`) VALUES
 (1, 'A1', 1, 1),
 (2, 'B2', 2, 1),
-(3, 'C3', 3, 1),
+(3, 'C3', 3, 0),
 (4, 'D4', 4, 0),
-(5, 'E5', 5, 1);
+(5, 'E5', 5, 1),
+(6, 'A1', 2, 0),
+(7, 'A1', 3, 0),
+(8, 'A1', 3, 0),
+(9, 'A1', 4, 0),
+(10, 'A1', 5, 0),
+(11, 'B2', 1, 0),
+(12, 'B2', 3, 0),
+(13, 'B2', 4, 0),
+(14, 'B2', 5, 0),
+(15, 'C3', 1, 0),
+(16, 'C3', 2, 0),
+(17, 'C3', 4, 0),
+(18, 'C3', 5, 0),
+(19, 'D4', 1, 0),
+(20, 'D4', 2, 0),
+(21, 'D4', 3, 0),
+(22, 'D4', 5, 0),
+(23, 'E5', 1, 0),
+(24, 'E5', 2, 0),
+(25, 'E5', 3, 0),
+(26, 'E5', 4, 0);
 
 -- --------------------------------------------------------
 
@@ -138,7 +170,7 @@ CREATE TABLE IF NOT EXISTS `reservations` (
   PRIMARY KEY (`id_reservation`),
   KEY `id_client` (`id_client`),
   KEY `id_place` (`id_place`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `reservations`
@@ -148,7 +180,19 @@ INSERT INTO `reservations` (`id_reservation`, `id_client`, `id_place`) VALUES
 (1, 1, 1),
 (2, 2, 2),
 (3, 3, 3),
-(4, 4, 5);
+(4, 4, 5),
+(5, 4, 3);
+
+--
+-- Déclencheurs `reservations`
+--
+DROP TRIGGER IF EXISTS `changes`;
+DELIMITER $$
+CREATE TRIGGER `changes` AFTER INSERT ON `reservations` FOR EACH ROW BEGIN
+    UPDATE places SET etat = 0 WHERE id_place = NEW.id_place;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
