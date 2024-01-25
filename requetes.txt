@@ -39,3 +39,16 @@ SELECT clients.nom, films.nom FROM clients JOIN films_seances ON clients.id_clie
 
 Une union sans aucun but mais une union qui fonctionne
 SELECT id_client, nom, prenom FROM clients UNION SELECT id_film, nom, description FROM films;
+
+Création d'un index
+ALTER TABLE `films` ADD INDEX(`nom`);
+
+Difference sans et avec index
+SET profiling = 1;
+
+SELECT * 
+FROM films 
+IGNORE INDEX (nom)
+WHERE nom='The Batman';
+
+SHOW PROFILES;
