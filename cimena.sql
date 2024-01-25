@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `clients` (
   `prenom` varchar(50) NOT NULL,
   `nb_personnes` int NOT NULL,
   PRIMARY KEY (`id_client`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Déchargement des données de la table `clients`
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `films` (
   `nom` varchar(50) NOT NULL,
   `description` text NOT NULL,
   PRIMARY KEY (`id_film`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Déchargement des données de la table `films`
@@ -98,7 +98,7 @@ CREATE TABLE IF NOT EXISTS `films_seances` (
   PRIMARY KEY (`id_fs`),
   KEY `id_client` (`id_client`),
   KEY `id_seance` (`id_seance`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `films_seances`
@@ -124,7 +124,7 @@ CREATE TABLE IF NOT EXISTS `places` (
   `etat` tinyint(1) NOT NULL,
   PRIMARY KEY (`id_place`),
   KEY `id_salle` (`id_salle`)
-) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Déchargement des données de la table `places`
@@ -172,7 +172,7 @@ CREATE TABLE IF NOT EXISTS `reservations` (
   PRIMARY KEY (`id_reservation`),
   KEY `id_client` (`id_client`),
   KEY `id_place` (`id_place`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `reservations`
@@ -207,7 +207,7 @@ CREATE TABLE IF NOT EXISTS `salles` (
   `id_salle` int NOT NULL AUTO_INCREMENT,
   `etat` tinyint(1) NOT NULL,
   PRIMARY KEY (`id_salle`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `salles`
@@ -236,7 +236,7 @@ CREATE TABLE IF NOT EXISTS `seances` (
   PRIMARY KEY (`id_seance`),
   KEY `id_film` (`id_film`),
   KEY `id_salle` (`id_salle`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Déchargement des données de la table `seances`
